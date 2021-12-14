@@ -1,0 +1,2 @@
+class Premissa < ApplicationRecord
+end

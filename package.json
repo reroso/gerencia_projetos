@@ -1,0 +1,15 @@
+{
+  "name": "gerencia_projetos",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "jquery": "^3.5.1",
+    "notify-js-legacy": "^0.4.1",
+    "popper.js": "^1.16.1",
+    "sortablejs": "^1.14.0"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "felipe <felipe0103@hotmail.com.br>",
+  "license": "MIT"
+}

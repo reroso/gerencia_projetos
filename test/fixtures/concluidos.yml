@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  descricao: MyString
+  entrega_id: 1
+  equipe_id: 1
+
+two:
+  descricao: MyString
+  entrega_id: 1
+  equipe_id: 1
