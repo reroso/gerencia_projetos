@@ -483,6 +483,62 @@ class MainScreenController < ApplicationController
     redirect_to "/main_screen"
   end
 
+  #andamento
+
+  def alterar_andamento
+    andamento = Andamento.new
+    andamento.descricao = params[:descricao]
+    andamento.pacote_id = params[:pacote_id]
+    andamento.equipe_id = params[:equipe_id]
+    andamento.save
+
+  end
+
+  def excluir_andamento
+    andamento = Andamento.new
+    andamento = Andamento.find(params[:id])
+    andamento.destroy
+
+    redirect_to "/main_screen"
+  end
+
+  #avaliacao
+
+  def alterar_avaliacao
+    avaliacao = Avaliacao.new
+    avaliacao.descricao = params[:descricao]
+    avaliacao.pacote_id = params[:pacote_id]
+    avaliacao.equipe_id = params[:equipe_id]
+    avaliacao.save
+
+  end
+
+  def excluir_avaliacao
+    avaliacao = Avaliacao.new
+    avaliacao = Avaliacao.find(params[:id])
+    avaliacao.destroy
+
+    redirect_to "/main_screen"
+  end
+
+  #concluido
+
+  def alterar_concluido
+    concluido = Concluido.new
+    concluido.descricao = params[:descricao]
+    concluido.pacote_id = params[:pacote_id]
+    concluido.equipe_id = params[:equipe_id]
+    concluido.save
+
+  end
+
+  def excluir_concluido
+    concluido = Concluido.new
+    concluido = Concluido.find(params[:id])
+    concluido.destroy
+
+    redirect_to "/main_screen"
+  end
 end
 
 #def salvar

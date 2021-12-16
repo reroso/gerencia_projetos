@@ -108,5 +108,18 @@ Rails.application.routes.draw do
   get "/main_screen/pacote", to: "main_screen#pacote"
   post "/main_screen/incluir_pacote", to: "main_screen#incluir_pacote"
 
+  #andamentos
+  
+  post "/main_screen/alterar_andamento", to: "main_screen#alterar_andamento"
+  get "/main_screen/:id/excluir_andamento", to: "main_screen#excluir_andamento"
+  
+  #avaliações
 
+  post "/main_screen/alterar_avaliacao", to: "main_screen#alterar_avaliacao"
+  get "/main_screen/:id/excluir_avaliacao", to: "main_screen#excluir_avaliacao"
+
+  #concluidos
+
+  post "/main_screen/alterar_concluido", to: "main_screen#alterar_concluido"
+  get "/main_screen/:id/excluir_concluido", to: "main_screen#excluir_concluido"
 end
