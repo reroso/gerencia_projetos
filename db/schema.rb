@@ -10,11 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_11_114943) do
+ActiveRecord::Schema.define(version: 2022_02_10_105302) do
+
+  create_table "andamento2s", force: :cascade do |t|
+    t.string "descricao"
+    t.integer "pacote_id"
+    t.integer "equipe_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "andamentos", force: :cascade do |t|
     t.string "descricao"
-    t.integer "entrega_id"
+    t.integer "equipe_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "pacote_id"
+  end
+
+  create_table "avaliacao2s", force: :cascade do |t|
+    t.string "descricao"
+    t.integer "pacote_id"
     t.integer "equipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -38,6 +54,14 @@ ActiveRecord::Schema.define(version: 2021_12_11_114943) do
     t.string "description"
     t.string "acronym"
     t.string "url_image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "concluido2s", force: :cascade do |t|
+    t.string "descricao"
+    t.integer "pacote_id"
+    t.integer "equipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

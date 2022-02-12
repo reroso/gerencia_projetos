@@ -841,7 +841,7 @@
             <div id ="card2" class="card" draggable="true" data-id = <%=andamento.id%>>
               <div class="content">                
                   <div>
-                    <label class="fonte_label"><span class="negrito">Pacote:</span> <%= andamento.pacote %></label>
+                    <label class="fonte_label"><span class="negrito">Pacote:</span> <%= andamento.pacote.descricao%></label>
                   </div>
                   <div>
                     <label class="fonte_label"><span class="negrito">Equipe:</span> <%= andamento.equipe.descricao %></label>
@@ -872,7 +872,7 @@
             <div id ="card2" class="card" draggable="true" data-id = <%=avaliacao.id%>>
               <div class="content">                   
                   <div>
-                    <label class="fonte_label"><span class="negrito">Pacote:</span> <%= avaliacao.pacote%></label>
+                    <label class="fonte_label"><span class="negrito">Pacote:</span> <%= avaliacao.pacote.descricao%></label>
                   </div>
                   <div>
                     <label class="fonte_label"><span class="negrito">Equipe:</span> <%= avaliacao.equipe.descricao %></label>
@@ -902,7 +902,7 @@
             <div id ="card2" class="card" draggable="true" data-id = <%=concluido.id%>>
               <div class="content">        
                   <div>
-                    <label class="fonte_label"><span class="negrito">Pacote:</span> <%= concluido.pacote%></label>
+                    <label class="fonte_label"><span class="negrito">Pacote:</span> <%= concluido.pacote.descricao%></label>
                   </div>
                   <div>
                     <label class="fonte_label"><span class="negrito">Equipe:</span> <%= concluido.equipe.descricao %></label>
@@ -1372,17 +1372,17 @@
        // log('CARD: Stop dragging')
 
         this.classList.remove('is-dragging')
-        
-        let cardDescricaoValue = e.toElement.childNodes[2].previousElementSibling.children[0].children[0][0].defaultValue; //mostrar o valor do card descricao
-        
+                
         let dropzoneDestinyName = e.path[1]; //mostra o nome da dropzone que joguei
         
         let dropzoneClassName = e.path[1].classList[1]; //mostrar se é dropzone tarefa ou descricao
+
+        console.log(e.toElement.childNodes[1].children[1]);
         
         //console.log(dropzoneOrigen);
           
           if (dropzoneClassName == "dropzone_descricao"){
-         
+              let cardDescricaoValue = e.toElement.childNodes[2].previousElementSibling.children[0].children[0][0].defaultValue; //mostrar o valor do card descricao
               let form = document.getElementsByClassName("formCloneMC")[0];
               let formClone = form.cloneNode(true);
               formClone.action = `/main_screen/alterar_${dropzoneDestinyName.dataset.dropnome}`;
@@ -1402,10 +1402,7 @@
            
 
           }
-
-
-
-          
+     
       }
 
 
@@ -1468,7 +1465,6 @@
       let selectEquipe = document.getElementsByClassName("tarefa_equipe");
       let selectPacote = document.getElementsByClassName("entrega_pacote");
       let selectTempoClone = document.getElementsByClassName("tempo_entrega_clone");
-      let nova variavel;
 
       let inputTempo = document.getElementsByClassName('inputElTempo');
       let inputTarefa = document.getElementsByClassName('inputElPacoteTarefa');

@@ -16,9 +16,9 @@ class MainScreenController < ApplicationController
     @restricaos = Restricao.all
     @custos = Custo.all
     @pacotes = Pacote.all
-    @andamentos = Andamento.all
-    @avaliacaos = Avaliacao.all
-    @concluidos = Concluido.all
+    @andamentos = Andamento2.all
+    @avaliacaos = Avaliacao2.all
+    @concluidos = Concluido2.all
 
   end  
 
@@ -486,7 +486,7 @@ class MainScreenController < ApplicationController
   #andamento
 
   def alterar_andamento
-    andamento = Andamento.new
+    andamento = Andamento2.new
     andamento.descricao = params[:descricao]
     andamento.pacote_id = params[:pacote_id]
     andamento.equipe_id = params[:equipe_id]
@@ -495,8 +495,8 @@ class MainScreenController < ApplicationController
   end
 
   def excluir_andamento
-    andamento = Andamento.new
-    andamento = Andamento.find(params[:id])
+    andamento = Andamento2.new
+    andamento = Andamento2.find(params[:id])
     andamento.destroy
 
     redirect_to "/main_screen"
@@ -505,7 +505,7 @@ class MainScreenController < ApplicationController
   #avaliacao
 
   def alterar_avaliacao
-    avaliacao = Avaliacao.new
+    avaliacao = Avaliacao2.new
     avaliacao.descricao = params[:descricao]
     avaliacao.pacote_id = params[:pacote_id]
     avaliacao.equipe_id = params[:equipe_id]
@@ -514,8 +514,8 @@ class MainScreenController < ApplicationController
   end
 
   def excluir_avaliacao
-    avaliacao = Avaliacao.new
-    avaliacao = Avaliacao.find(params[:id])
+    avaliacao = Avaliacao2.new
+    avaliacao = Avaliacao2.find(params[:id])
     avaliacao.destroy
 
     redirect_to "/main_screen"
@@ -524,7 +524,7 @@ class MainScreenController < ApplicationController
   #concluido
 
   def alterar_concluido
-    concluido = Concluido.new
+    concluido = Concluido2.new
     concluido.descricao = params[:descricao]
     concluido.pacote_id = params[:pacote_id]
     concluido.equipe_id = params[:equipe_id]
@@ -533,8 +533,8 @@ class MainScreenController < ApplicationController
   end
 
   def excluir_concluido
-    concluido = Concluido.new
-    concluido = Concluido.find(params[:id])
+    concluido = Concluido2.new
+    concluido = Concluido2.find(params[:id])
     concluido.destroy
 
     redirect_to "/main_screen"
