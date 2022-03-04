@@ -63,16 +63,7 @@
     overflow: auto; 
     }
     #cx7{
-    position: absolute;    #imgpos {
-    position: absolute; 
-    left: 317px; 
-    top: 0px; 
-    }
-    #imgpos2 {
-    position: absolute; 
-    left: 170px; 
-    top: 0px; 
-    }
+    position: absolute;    
     height: 221.75px;
     width: 371.2px;
     top: 70px;
@@ -962,18 +953,18 @@
       <div class = "hidden" id="template-card2-tarefa-novo">
         <div id ="card2" class="card" draggable="true" >
           <div class="content">
-            
             <fieldset>
               <form action="/main_screen/incluir_tarefa" method="post" class="formulario">
                 <div>
                   <%= select("tarefa","pacote_id", Pacote.all.collect{|e| [e.descricao, e.id]}) %>
                   <%= select("tarefa","equipe_id", Equipe.all.collect{|e| [e.descricao, e.id]}) %>
+                  <input type="hidden" name="pacote_id" readonly="readonly" id="inputElTempoClone">
+                  <input type="hidden" name="equipe_id" readonly="readonly" id="inputElTempoClone">
                   <textarea type="text" name="descricao" style="background-color:transparent; border: none;"></textarea>
 
                 </div>
               </form>
             </fieldset>
-          
           </div>
         </div>
       </div>
@@ -1126,7 +1117,7 @@
                 <div>
                   <textarea type="text" name="descricao" style="background-color:transparent; border: none;"></textarea>
                   <%= select("tempo","entrega_id", Entrega.all.collect{|e| [e.descricao, e.id]},{},{class: "tempo_entrega_clone"})%>
-                  <input type="text" name="entrega_id" readonly="readonly" id="inputElTempoClone">
+                  <input type="hidden" name="entrega_id" readonly="readonly" id="inputElTempoClone">
                   <div>
                   <input type="date" name="data">
                   <input type="date" name="data_final">
@@ -1304,6 +1295,13 @@
           var temp = $('#template-card-tempo-novo .card').clone();
           temp.appendTo('#dropzoneTempo');
           $('#dropzoneTempo .card').removeClass('hidden');
+          
+          let targetPath = e.target.parentElement.nextElementSibling.lastElementChild.children[0].children[0].children[0].children[0];
+          targetPath.children[2].value = targetPath.children[1].value;
+
+          targetPath.children[1].addEventListener('change', e => {
+              targetPath.children[2].value = targetPath.children[1].value;
+          })
           addEventListenerToForm();
           }
         
@@ -1324,7 +1322,23 @@
           var temp = $('#template-card2-tarefa-novo .card').clone();
           temp.appendTo('#dropzoneTarefas');
           $('#dropzoneTarefas .card').removeClass('hidden');
+          
+          let targetPath = e.target.parentElement.nextElementSibling.lastElementChild.children[0].children[0].children[0].children[0]
+          console.log(targetPath);
+
+          targetPath.children[2].value = targetPath.children[0].value;
+          targetPath.children[3].value = targetPath.children[1].value;
+
+          targetPath.children[0].addEventListener('change', e => {
+              targetPath.children[2].value = targetPath.children[0].value;
+          })
+
+          targetPath.children[1].addEventListener('change', e => {
+              targetPath.children[3].value = targetPath.children[1].value;
+          })
+
           addEventListenerToForm();
+          
           }
 
         clickButtonCustos.addEventListener('click', addCustos, false);
@@ -1342,8 +1356,8 @@
         console.log('> ' + message)
       }
 
-      const cards = document.querySelectorAll('.card')
-      const dropzones = document.querySelectorAll('.dropzone')
+      var cards = document.querySelectorAll('.card')
+      var dropzones = document.querySelectorAll('.dropzone')
 
       cards.forEach(card => {
           card.addEventListener('dragstart', dragstart)
@@ -1351,8 +1365,8 @@
           card.addEventListener('dragend', dragend)
       })
       
-      let dropzoneOrigen;
-      let cardDelete;
+      var dropzoneOrigen;
+      var cardDelete;
 
       function dragstart(e){
        // log('CARD: Start dragging')
@@ -1373,9 +1387,9 @@
 
         this.classList.remove('is-dragging')
                 
-        let dropzoneDestinyName = e.path[1]; //mostra o nome da dropzone que joguei
+        var dropzoneDestinyName = e.path[1]; //mostra o nome da dropzone que joguei
         
-        let dropzoneClassName = e.path[1].classList[1]; //mostrar se é dropzone tarefa ou descricao
+        var dropzoneClassName = e.path[1].classList[1]; //mostrar se é dropzone tarefa ou descricao
 
         console.log(e.toElement.childNodes[1].children[1]);
         
@@ -1434,7 +1448,7 @@
       
       ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////funções para as tarefas
      
-      let formulario = document.getElementsByClassName('formulario');
+        var formulario = document.getElementsByClassName('formulario');
         for (let i = 0; i< formulario.length; i++){
           formulario[i].addEventListener('keydown', e => {
                 if(e.key == "Enter") {
@@ -1460,20 +1474,20 @@
         }
       }
 
-      let selectTempo = document.getElementsByClassName("tempo_entrega");
-      let selectTarefa = document.getElementsByClassName("tarefa_pacote");
-      let selectEquipe = document.getElementsByClassName("tarefa_equipe");
-      let selectPacote = document.getElementsByClassName("entrega_pacote");
-      let selectTempoClone = document.getElementsByClassName("tempo_entrega_clone");
+      var selectTempo = document.getElementsByClassName("tempo_entrega");
+      var selectTarefa = document.getElementsByClassName("tarefa_pacote");
+      var selectEquipe = document.getElementsByClassName("tarefa_equipe");
+      var selectPacote = document.getElementsByClassName("entrega_pacote");
+      var selectTempoClone = document.getElementsByClassName("tempo_entrega_clone");
 
-      let inputTempo = document.getElementsByClassName('inputElTempo');
-      let inputTarefa = document.getElementsByClassName('inputElPacoteTarefa');
-      let inputEquipe = document.getElementsByClassName('inputElEquipe');
-      let inputPacote = document.getElementsByClassName('inputElPacote');
-      let inputTempoClone = document.getElementsByClassName('inputElTempoClone');
+      var inputTempo = document.getElementsByClassName('inputElTempo');
+      var inputTarefa = document.getElementsByClassName('inputElPacoteTarefa');
+      var inputEquipe = document.getElementsByClassName('inputElEquipe');
+      var inputPacote = document.getElementsByClassName('inputElPacote');
+      var inputTempoClone = document.getElementsByClassName('inputElTempoClone');
 
       
-      let i = 0;
+      var i = 0;
       while( i < selectTempo.length) {
           selectTempo[i].addEventListener('change', e => {
               e.target.nextElementSibling.children[2].value = e.target.value;
