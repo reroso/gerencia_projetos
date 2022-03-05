@@ -487,9 +487,9 @@ class MainScreenController < ApplicationController
 
   def alterar_andamento
     andamento = Andamento2.new
-    andamento.descricao = params[:descricao]
     andamento.pacote_id = params[:pacote_id]
     andamento.equipe_id = params[:equipe_id]
+    andamento.descricao = params[:descricao]   
     andamento.save
 
   end

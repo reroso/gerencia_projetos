@@ -789,7 +789,7 @@
       <div id="mainContent">
         <button id="clickButtonTarefas" class="buttonStyle">+</button>
       </div>
-      <div id="dropzoneTarefas" class="dropzone dropzone_tarefa">
+      <div id="dropzoneTarefas" class="dropzone dropzone_tarefa" data-dropnome="tarefa">
          
         <% @tarefas.each do |tarefa| %>
         
@@ -824,7 +824,7 @@
       </div>
       <div id="mainContent">
       </div>
-      <div id="dropzoneAndamento" class="dropzone dropzone_tarefa">
+      <div id="dropzoneAndamento" class="dropzone dropzone_tarefa" data-dropnome="andamento">
 
         <% @andamentos.each do |andamento| %>
         
@@ -832,13 +832,13 @@
             <div id ="card2" class="card" draggable="true" data-id = <%=andamento.id%>>
               <div class="content">                
                   <div>
-                    <label class="fonte_label"><span class="negrito">Pacote:</span> <%= andamento.pacote.descricao%></label>
+                    <label class="fonte_label"><span class="negrito">Pacote:</span> <%= andamento.pacote&.descricao%></label>
                   </div>
                   <div>
-                    <label class="fonte_label"><span class="negrito">Equipe:</span> <%= andamento.equipe.descricao %></label>
+                    <label class="fonte_label"><span class="negrito">Equipe:</span> <%= andamento.equipe&.descricao%></label>
                   </div>
                   <div>
-                    <label class="fonte_label"><span class="negrito">Tarefa:</span> <%= andamento.descricao %></label>
+                    <label class="fonte_label"><span class="negrito">Tarefa:</span> <%= andamento.descricao%></label>
                   </div> 
               </div>
             </div>
@@ -855,7 +855,7 @@
       </div>
       <div id="mainContent">
       </div>
-      <div id="dropzoneAvaliacao" class="dropzone dropzone_tarefa">
+      <div id="dropzoneAvaliacao" class="dropzone dropzone_tarefa" data-dropnome="avaliacao">
 
         <% @avaliacaos.each do |avaliacao| %>
         
@@ -863,10 +863,10 @@
             <div id ="card2" class="card" draggable="true" data-id = <%=avaliacao.id%>>
               <div class="content">                   
                   <div>
-                    <label class="fonte_label"><span class="negrito">Pacote:</span> <%= avaliacao.pacote.descricao%></label>
+                    <label class="fonte_label"><span class="negrito">Pacote:</span> <%= avaliacao.pacote&.descricao%></label>
                   </div>
                   <div>
-                    <label class="fonte_label"><span class="negrito">Equipe:</span> <%= avaliacao.equipe.descricao %></label>
+                    <label class="fonte_label"><span class="negrito">Equipe:</span> <%= avaliacao.equipe&.descricao %></label>
                   </div>
                   <div>
                     <label class="fonte_label"><span class="negrito">Tarefa:</span> <%= avaliacao.descricao %></label>
@@ -885,7 +885,7 @@
       </div>
       <div id="mainContent">
       </div>
-      <div id="dropzoneConcluidos" class="dropzone dropzone_tarefa">
+      <div id="dropzoneConcluidos" class="dropzone dropzone_tarefa" data-dropnome="concluido">
 
          <% @concluidos.each do |concluido| %>
         
@@ -954,13 +954,13 @@
         <div id ="card2" class="card" draggable="true" >
           <div class="content">
             <fieldset>
-              <form action="/main_screen/incluir_tarefa" method="post" class="formulario">
+              <form action="/main_screen/incluir_tarefa" method="post" class="formulario formCloneMCTarefa">
                 <div>
                   <%= select("tarefa","pacote_id", Pacote.all.collect{|e| [e.descricao, e.id]}) %>
                   <%= select("tarefa","equipe_id", Equipe.all.collect{|e| [e.descricao, e.id]}) %>
-                  <input type="hidden" name="pacote_id" readonly="readonly" id="inputElTempoClone">
-                  <input type="hidden" name="equipe_id" readonly="readonly" id="inputElTempoClone">
-                  <textarea type="text" name="descricao" style="background-color:transparent; border: none;"></textarea>
+                  <input type="hidden" name="pacote_id" class="formInputDescricaoTarefa" readonly="readonly" id="inputElTempoClone">
+                  <input type="hidden" name="equipe_id" class="formInputEquipeTarefa" readonly="readonly" id="inputElTempoClone">
+                  <textarea type="text" name="descricao" class="formInputPacoteTarefa" style="background-color:transparent; border: none;"></textarea>
 
                 </div>
               </form>
@@ -1374,7 +1374,6 @@
         this.classList.add('is-dragging')
         dropzoneOrigen = e.target.parentElement.parentElement;
         cardDelete = e.target.dataset.id;
-        console.log(e);
       }
 
       function drag(){
@@ -1390,11 +1389,7 @@
         var dropzoneDestinyName = e.path[1]; //mostra o nome da dropzone que joguei
         
         var dropzoneClassName = e.path[1].classList[1]; //mostrar se é dropzone tarefa ou descricao
-
-        console.log(e.toElement.childNodes[1].children[1]);
-        
-        //console.log(dropzoneOrigen);
-          
+                  
           if (dropzoneClassName == "dropzone_descricao"){
               let cardDescricaoValue = e.toElement.childNodes[2].previousElementSibling.children[0].children[0][0].defaultValue; //mostrar o valor do card descricao
               let form = document.getElementsByClassName("formCloneMC")[0];
@@ -1404,16 +1399,35 @@
               formClone.name = "formClone";             
               document.body.appendChild(formClone);
               formClone.submit();
-           
+              
+              formClone.action = `/main_screen/${cardDelete}/excluir_${dropzoneOrigen.dataset.dropnome}`;
+              formClone.method = "get"
+                setTimeout(function(){
+                  formClone.submit();
+                },1000);
+          }
+
+          if (dropzoneClassName == "dropzone_tarefa"){
+            let cardTarefaPacote = e.toElement.childNodes[2].previousElementSibling.children[0].children[0][1].value; //valor do pacote
+            let cardTarefaEquipe = e.toElement.childNodes[2].previousElementSibling.children[0].children[0][3].value; //valor da equipe
+            let cardTarefaDescricao = e.toElement.childNodes[2].previousElementSibling.children[0].children[0][4].defaultValue; // valor da descrição
+            let formTarefa = document.getElementsByClassName("formCloneMCTarefa")[0];
+            let formCloneTarefa = formTarefa.cloneNode(true);
+            formCloneTarefa.action = `/main_screen/alterar_${dropzoneDestinyName.dataset.dropnome}`;
+            formCloneTarefa.getElementsByClassName("formInputPacoteTarefa")[0].innerHTML = cardTarefaDescricao;
+            formCloneTarefa.getElementsByClassName("formInputEquipeTarefa")[0].innerHTML = cardTarefaEquipe;
+            formCloneTarefa.getElementsByClassName("formInputDescricaoTarefa")[0].innerHTML = cardTarefaPacote;
+            formCloneTarefa.name = "formCloneTarefa";             
+            document.body.appendChild(formCloneTarefa);
             
-            formClone.action = `/main_screen/${cardDelete}/excluir_${dropzoneOrigen.dataset.dropnome}`;
-            formClone.method = "get"
-            console.log(formClone);
-            console.log(cardDelete);
+            console.log(formCloneTarefa);
+            formCloneTarefa.submit();
+                 
+            /*formCloneTarefa.action = `/main_screen/${cardDelete}/excluir_${dropzoneOrigen.dataset.dropnome}`;
+            formCloneTarefa.method = "get"
               setTimeout(function(){
-                 formClone.submit();
-              },1000);
-           
+                formCloneTarefa.submit();
+              },1000);*/
 
           }
      
